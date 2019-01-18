@@ -1,4 +1,4 @@
-/*! hellojs v1.17.1 | (c) 2012-2018 Andrew Dodson | MIT https://adodson.com/hello.js/LICENSE */
+/*! hellojs v1.17.2 | (c) 2012-2019 Andrew Dodson | MIT https://adodson.com/hello.js/LICENSE */
 // ES5 Object.create
 if (!Object.create) {
 
@@ -366,13 +366,13 @@ hello.utils.extend(hello, {
 		var provider = _this.services[p.network];
 
 		// Create a global listener to capture events triggered out of scope
-		var callbackId = utils.globalEvent(function(str) {
+		var callbackId = utils.globalEvent(function(obj) {
 
 			// The responseHandler returns a string, lets save this locally
-			var obj;
-
-			if (str) {
-				obj = JSON.parse(str);
+			if (obj) {
+				if (typeof (obj) == 'string') {
+					obj = JSON.parse(obj);
+				}
 			}
 			else {
 				obj = error('cancelled', 'The authentication was not completed');
@@ -4102,6 +4102,10 @@ if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.
 					hello.utils.extend(p.query, p.data);
 					p.data = null;
 				}
+
+				// Just make things work for now.
+				// https://github.com/MrSwitch/hello.js/issues/587
+				p.query['deprecation-extension'] = true;
 
 				return true;
 			},

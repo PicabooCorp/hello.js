@@ -164,6 +164,10 @@
 					p.data = null;
 				}
 
+				// Just make things work for now.
+				// https://github.com/MrSwitch/hello.js/issues/587
+				p.query['deprecation-extension'] = true;
+
 				return true;
 			},
 
